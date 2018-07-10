@@ -1,13 +1,19 @@
 package ru.otus;
 
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import ru.otus.service.QuizService;
+
 /**
  * Hello world!
  *
  */
-public class App 
+public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("resources/spring-context.xml");
+        QuizService quizService = context.getBean(QuizService.class);
+        quizService.testUser();
     }
 }
