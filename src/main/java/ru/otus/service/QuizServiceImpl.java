@@ -2,38 +2,43 @@ package ru.otus.service;
 
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 import ru.otus.dao.QuestionDao;
 import ru.otus.domain.Question;
 
 public class QuizServiceImpl implements QuizService {
-    private static final String NAME_PATTERN = "[A-Z][a-z]*";
+    private static final String NAME_PATTERN = "[A-Z]*[a-z]*";
+    private final QuestionDao questionDao;
     private List<Question> questions;
     private String name;
     private String surname;
     private int score;
 
     public QuizServiceImpl(QuestionDao questionDao) {
-        questions = questionDao.getQuestions();
+        this.questionDao = questionDao;
     }
 
     @Override
     public void testUser() {
         Random r = new Random();
+        questions = questionDao.getQuestions();
 
         System.out.println("Stop!");
 
         System.out.println("What is your name: ");
+        String qq;
+        Scanner scanner = new Scanner(System.in);
 
         do {
-            name = System.console().readLine();
+            name = scanner.nextLine();
         }
         while (!validateName(name));
 
         System.out.println("What is your surname: ");
 
         do {
-            surname = System.console().readLine();
+            surname = scanner.nextLine();
         }
         while (!validateName(surname));
 
@@ -51,18 +56,22 @@ public class QuizServiceImpl implements QuizService {
                 int index2 = r.nextInt(4);
                 String t = options[index1];
                 options[index1] = options[index2];
-                options[index2] = options[index1];
+                options[index2] = t;
             }
 
             for (int i = 0; i < 4; i++) {
                 System.out.println(i + ": " + options[i]);
             }
 
-            System.out.print("Your answer: ");
+            int choice = 0;
 
-            String choice = System.console().readLine();
+            do {
+                System.out.print("Your answer: ");
+                String choiceS = scanner.nextLine();
+                choice = Integer.parseInt(choiceS);
+            } while (choice < 0 || choice > 3);
 
-            if (options[Integer.parseInt(choice)].equals(q.getCorrectAnswer())) {
+            if (options[choice].equals(q.getCorrectAnswer())) {
                 System.out.println("correct");
                 score++;
             } else {

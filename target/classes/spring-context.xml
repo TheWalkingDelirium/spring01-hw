@@ -7,10 +7,8 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
-    <context:property-placeholder location="classpath:../resources/foo.properties" />
-
     <bean id="questionDao" class="ru.otus.dao.QuestionDaoImpl">
-        <constructor-arg value="${test.path}"/>
+        <constructor-arg value="src/main/resources/test.csv"/>
     </bean>
 
     <bean id="quizService" class="ru.otus.service.QuizServiceImpl">

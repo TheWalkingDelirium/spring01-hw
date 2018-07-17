@@ -30,6 +30,8 @@ public class QuestionDaoImpl implements QuestionDao {
                         questionContent[1]);
                 questions.add(q);
             }
+
+            return questions;
         } catch (IOException e) {
             e.printStackTrace();
         }
